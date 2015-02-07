@@ -1,28 +1,19 @@
 #!/bin/bash
 
-echo "SCRIPT - TYPE IN YOUR PASSWORD:"
-read mysql_password > /dev/null
-echo "SCRIPT - TYPE IN YOUR AGAIN PASSWORD:"
-read mysql_password_again > /dev/null
-
-if [ "${mysql_password}" != "${mysql_password_again}" ]
-then
-    echo "SCRIPT - PASSWORD DO NOT MATCH!"
-    exit
-fi
-
-echo "SCRIPT - OK!"
+# Read password
+echo "Type your password:"
+read -s mysqlpass
 
 # Upgrade system
-apt-get update -q -y > /dev/null
-apt-get upgrade -q -y > /dev/null
+apt-get update -q -y
+apt-get upgrade -q -y
 
 # Add APT passenger repo
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 
 # Add APT dotdeb repo
-wget http://www.dotdeb.org/dotdeb.gpg > /dev/null
-sudo apt-key add dotdeb.gpg > /dev/null
+wget http://www.dotdeb.org/dotdeb.gpg
+sudo apt-key add dotdeb.gpg
 rm dotdeb.gpg
 
 # Append to sources.list
@@ -33,10 +24,10 @@ echo "deb-src http://packages.dotdeb.org wheezy all" >> /etc/apt/sources.list
 echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger wheezy main" > /etc/apt/sources.list.d/passenger.list
 
 # Update APT list
-apt-get update > /dev/null
+apt-get update
 
 # Install opensssh
-apt-get install openssh-server -q -y  > /dev/null
+apt-get install openssh-server -q -y
 
 # Install postfix and openssh-server
 echo "postfix postfix/main_mailer_type select Internet Site" | debconf-set-selections
@@ -44,19 +35,19 @@ echo "postfix postfix/mailname string vanki.de" | debconf-set-selections
 apt-get install postfix -q -y
 
 # Install ngnix and extras
-apt-get install nginx -q -y > /dev/null
-apt-get install nginx-extras passenger php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd -q -y  > /dev/null
+apt-get install nginx -q -y
+apt-get install nginx-extras passenger php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd -q -y
 
 # Install mysql
 echo "mysql-server mysql-server/root_password password ${mysqlpass}" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password ${mysqlpass}" | debconf-set-selections
-apt-get install mysql-server -q -y > /dev/null
+apt-get install mysql-server -q -y
 
 # Download Gitlab Omni Installer
-wget https://downloads-packages.s3.amazonaws.com/debian-7.8/gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb > /dev/null
+wget https://downloads-packages.s3.amazonaws.com/debian-7.8/gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
 
 # Install Gitlab
-sudo dpkg -i gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb > /dev/null
+sudo dpkg -i gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
 rm -rf gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
 
 # Config Gitlab
@@ -69,7 +60,8 @@ echo "virtual_alias_maps = hash:/etc/postfix/virtual" >> /etc/postfix/main.cf
 echo "@vanki.de kizmann@live.com" >> /etc/postfix/virtual
 
 # Reload nginx
-service postfix reload > /dev/null
+postmap /etc/postfix/virtual
+service postfix reload
 
 # Config nginx
 rm /etc/nginx/sites-enabled/default
@@ -77,7 +69,7 @@ ln nginx/vanki.conf /etc/nginx/sites-enabled/vanki.conf
 ln nginx/gitlab.conf /etc/nginx/sites-enabled/gitlab.conf
 
 # Reload nginx
-service nginx reload > /dev/null
+service nginx reload
 
 # Configure Gitlab
-sudo gitlab-ctl reconfigure > gitlab.log
+sudo gitlab-ctl reconfigure
