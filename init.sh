@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "SCRIPT - TYPE IN YOUR PASSWORD:"
-read mysql_password
+read mysql_password > /dev/null
 echo "SCRIPT - TYPE IN YOUR AGAIN PASSWORD:"
-read mysql_password_again
+read mysql_password_again > /dev/null
 
-if [ "${mysql_password}" -ne "${mysql_password_again}" ]
+if [ "${mysql_password}" != "${mysql_password_again}" ]
 then
     echo "SCRIPT - PASSWORD DO NOT MATCH!"
     exit
@@ -14,13 +14,15 @@ fi
 echo "SCRIPT - OK!"
 
 # Upgrade system
-apt-get update -q -y; apt-get upgrade -q -y > /dev/null
+apt-get update -q -y > /dev/null
+apt-get upgrade -q -y > /dev/null
 
 # Add APT passenger repo
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 
 # Add APT dotdeb repo
-wget http://www.dotdeb.org/dotdeb.gpg; sudo apt-key add dotdeb.gpg > /dev/null
+wget http://www.dotdeb.org/dotdeb.gpg > /dev/null
+sudo apt-key add dotdeb.gpg > /dev/null
 rm dotdeb.gpg
 
 # Append to sources.list
@@ -60,6 +62,14 @@ rm -rf gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
 # Config Gitlab
 mv /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.backup.rb
 ln gitlab/gitlab.rb /etc/gitlab/gitlab.rb
+
+# Config postfix
+echo "virtual_alias_domains = vanki.de" >> /etc/postfix/main.cf
+echo "virtual_alias_maps = hash:/etc/postfix/virtual" >> /etc/postfix/main.cf
+echo "@vanki.de kizmann@live.com" >> /etc/postfix/virtual
+
+# Reload nginx
+service postfix reload > /dev/null
 
 # Config nginx
 rm /etc/nginx/sites-enabled/default
