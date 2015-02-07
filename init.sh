@@ -43,6 +43,9 @@ apt-get install postfix -q -y
 apt-get install nginx -q -y
 apt-get install nginx-extras passenger php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd -q -y
 
+# Install vsftpd
+apt-get install vsftpd -q -y
+
 # Install mysql
 echo "mysql-server mysql-server/root_password password ${mysqlpass}" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password ${mysqlpass}" | debconf-set-selections
