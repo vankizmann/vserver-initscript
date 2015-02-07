@@ -52,7 +52,7 @@ rm -rf gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
 
 # Config Gitlab
 mv /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.backup.rb
-ln gitlab/gitlab.rb /etc/gitlab/gitlab.rb
+cp gitlab/gitlab.rb /etc/gitlab/gitlab.rb
 
 # Config postfix
 echo "virtual_alias_domains = vanki.de" >> /etc/postfix/main.cf
@@ -70,6 +70,10 @@ ln nginx/gitlab.conf /etc/nginx/sites-enabled/gitlab.conf
 
 # Reload nginx
 service nginx reload
+
+# Set user rights
+sudo usermod -aG gitlab-www www-data
+chmod g+x /var/opt/gitlab/gitlab-rails/sockets/gitlab.socket
 
 # Configure Gitlab
 sudo gitlab-ctl reconfigure
