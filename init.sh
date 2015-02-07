@@ -78,7 +78,6 @@ ln nginx/gitlab.conf /etc/nginx/sites-enabled/gitlab.conf
 
 # Reload nginx
 service nginx reload
-service nginx restart
 
 # Config vsftpd
 mv /etc/vsftpd.conf /etc/vsftpd.backup.conf
