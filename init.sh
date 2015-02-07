@@ -1,8 +1,13 @@
 #!/bin/bash
 
 # Read password
-echo "Type your password:"
+echo "Type your mysql password:"
 read mysqlpass
+
+# Create user
+useradd vanki
+mkdir /home/vanki
+mkdir /home/vanki/public
 
 # Upgrade system
 apt-get update -q -y
@@ -52,12 +57,12 @@ rm -rf gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
 
 # Config Gitlab
 mv /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.backup.rb
-cp gitlab/gitlab.rb /etc/gitlab/gitlab.rb
+ln gitlab/gitlab.rb /etc/gitlab/gitlab.rb
 
 # Config postfix
 echo "virtual_alias_domains = vanki.de" >> /etc/postfix/main.cf
 echo "virtual_alias_maps = hash:/etc/postfix/virtual" >> /etc/postfix/main.cf
-echo "@vanki.de kizmann@live.com" >> /etc/postfix/virtual
+echo "@vanki.de kizmann@protonmail.ch" >> /etc/postfix/virtual
 
 # Reload nginx
 postmap /etc/postfix/virtual
@@ -70,10 +75,16 @@ ln nginx/gitlab.conf /etc/nginx/sites-enabled/gitlab.conf
 
 # Reload nginx
 service nginx reload
+service nginx restart
+
+# Config vsftpd
+mv /etc/vsftpd.conf /etc/vsftpd.backup.conf
+ln vsftpd/vsftpd.conf /etc/vsftpd.conf
+ln vsftpd/vsftpd.user.conf /etc/vsftpd.user.conf
 
 # Set user rights
 sudo usermod -aG gitlab-www www-data
-chmod g+x /var/opt/gitlab/gitlab-rails/sockets/gitlab.socket
+#chmod 777 /var/opt/gitlab/gitlab-rails/sockets/gitlab.socket
 
 # Configure Gitlab
 sudo gitlab-ctl reconfigure
