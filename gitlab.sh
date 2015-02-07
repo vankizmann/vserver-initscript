@@ -58,9 +58,6 @@ echo "nginx['enable'] = false" >> /etc/gitlab/gitlab.rb
 echo "ci_nginx['enable'] = false" >> /etc/gitlab/gitlab.rb
 echo "web_server['external_users'] = ['www-data']" >> /etc/gitlab/gitlab.rb
 
-# Create folders
-mkdir /var/log/gitlab/nginx/
-
 # Config nginx
 rm /etc/nginx/sites-enabled/default
 ln nginx/vanki.conf /etc/nginx/sites-enabled/vanki.conf
