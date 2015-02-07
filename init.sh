@@ -2,7 +2,7 @@
 
 # Read password
 echo "Type your password:"
-read -s mysqlpass
+read mysqlpass
 
 # Upgrade system
 apt-get update -q -y
