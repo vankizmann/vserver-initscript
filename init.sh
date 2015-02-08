@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Initscript
 echo "UPGRADE SYSTEM..."
 apt-get update -q -y > /dev/null
 apt-get upgrade -q -y > /dev/null
