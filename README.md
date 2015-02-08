@@ -8,5 +8,7 @@
 <p><code>mysql> use mysql;</code></p>
 <p><code>mmysql> UPDATE mysql.user SET Password=PASSWORD('new-password') WHERE User='root';</code></p>
 <p><code>mFLUSH PRIVILEGES;<br>quit;</code></p>
+<h3>More info:</h3>
+<p>Comming soon!</p>
 <p></p>
 <p><b>Everything done!</b></p>
