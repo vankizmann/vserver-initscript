@@ -2,7 +2,7 @@
 
 # Add user
 useradd web
-mkidr /home/web
+mkdir /home/web
 mkdir /home/web/public
 
 # Install vsftpd
