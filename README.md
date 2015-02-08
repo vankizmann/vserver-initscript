@@ -1,4 +1,7 @@
 <h1>VSERVER Initscript</h1>
+<p>First set locale</p>
+<p><code>nano /etc/ssh/ssh_config</code></p>
+<p><code>#SendEnv LANG LC_*</code></p>
 <h3>FTP</h3>
 <p>First run the init.sh and after run these commands:</p>
 <p><code>passwd web</code></p>
@@ -11,4 +14,5 @@
 <p><code>mysql> FLUSH PRIVILEGES;<br>quit;</code></p>
 <h3>Gitlab</h3>
 <p><code>sudo gitlab-ctl reconfigure</code></p>
+<p><code>sudo usermod -aG gitlab-www www-data</code></p>
 <p>Username: root<br>Password: 5iveL!fe</p>
