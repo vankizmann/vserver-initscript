@@ -10,4 +10,3 @@
 <p><code>mFLUSH PRIVILEGES;<br>quit;</code></p>
 <h3>Gitlab</h3>
 <p>Username: root<br>Password: 5iveL!fe</p>
-<p><b>Everything done!</b></p>
