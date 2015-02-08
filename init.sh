@@ -1,92 +1,28 @@
 #!/bin/bash
 
-# Read password
-echo "Type your mysql password:"
-read mysqlpass
+echo "UPGRADE SYSTEM..."
+apt-get update -q -y > /dev/null
+apt-get upgrade -q -y > /dev/null
 
-# Create user
-useradd vanki
-mkdir /home/vanki
-mkdir /home/vanki/public
+echo "ADD REPOSITORY..."
+sh repository.sh > /dev/null
 
-# Upgrade system
-apt-get update -q -y
-apt-get upgrade -q -y
+echo "INSTALL VSFTPD..."
+sh vsftpd.sh > /dev/null
 
-# Add APT passenger repo
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+echo "INSTALL POSTFIX..."
+sh postfix.sh > /dev/null
 
-# Add APT dotdeb repo
-wget http://www.dotdeb.org/dotdeb.gpg
-sudo apt-key add dotdeb.gpg
-rm dotdeb.gpg
+echo "INSTALL NGINX..."
+sh nginx.sh > /dev/null
 
-# Append to sources.list
-echo "deb http://packages.dotdeb.org wheezy all" >> /etc/apt/sources.list
-echo "deb-src http://packages.dotdeb.org wheezy all" >> /etc/apt/sources.list
+echo "INSTALL PHP5-FPM..."
+sh php5-fpm.sh > /dev/null
 
-# Save passenger.list
-echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger wheezy main" > /etc/apt/sources.list.d/passenger.list
+echo "INSTALL MYSQL..."
+sh mysql.sh > /dev/null
 
-# Update APT list
-apt-get update
+echo "INSTALL GITLAB..."
+sh gitlab.sh > /dev/null
 
-# Install opensssh
-apt-get install openssh-server -q -y
-
-# Install postfix and openssh-server
-echo "postfix postfix/main_mailer_type select Internet Site" | debconf-set-selections
-echo "postfix postfix/mailname string vanki.de" | debconf-set-selections
-apt-get install postfix -q -y
-
-# Install ngnix and extras
-apt-get install nginx -q -y
-apt-get install nginx-extras passenger php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd -q -y
-
-# Install vsftpd
-apt-get install vsftpd -q -y
-
-# Install mysql
-echo "mysql-server mysql-server/root_password password ${mysqlpass}" | debconf-set-selections
-echo "mysql-server mysql-server/root_password_again password ${mysqlpass}" | debconf-set-selections
-apt-get install mysql-server -q -y
-
-# Download Gitlab Omni Installer
-wget https://downloads-packages.s3.amazonaws.com/debian-7.8/gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
-
-# Install Gitlab
-sudo dpkg -i gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
-rm -rf gitlab_7.7.2-omnibus.5.4.2.ci-1_amd64.deb
-
-# Config Gitlab
-mv /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.backup.rb
-ln gitlab/gitlab.rb /etc/gitlab/gitlab.rb
-
-# Config postfix
-echo "virtual_alias_domains = vanki.de" >> /etc/postfix/main.cf
-echo "virtual_alias_maps = hash:/etc/postfix/virtual" >> /etc/postfix/main.cf
-echo "@vanki.de kizmann@protonmail.ch" >> /etc/postfix/virtual
-
-# Reload nginx
-postmap /etc/postfix/virtual
-service postfix reload
-
-# Config nginx
-rm /etc/nginx/sites-enabled/default
-ln nginx/vanki.conf /etc/nginx/sites-enabled/vanki.conf
-ln nginx/gitlab.conf /etc/nginx/sites-enabled/gitlab.conf
-
-# Reload nginx
-service nginx reload
-
-# Config vsftpd
-mv /etc/vsftpd.conf /etc/vsftpd.backup.conf
-ln vsftpd/vsftpd.conf /etc/vsftpd.conf
-ln vsftpd/vsftpd.user.conf /etc/vsftpd.user.conf
-
-# Set user rights
-sudo usermod -aG gitlab-www www-data
-#chmod 777 /var/opt/gitlab/gitlab-rails/sockets/gitlab.socket
-
-# Configure Gitlab
-sudo gitlab-ctl reconfigure
+echo "DONE!"

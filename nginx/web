@@ -15,19 +15,26 @@ server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	server_tokens off;
-	root /home/vanki/public;
+	root /home/web/public;
 
 	client_max_body_size 20m;
 
-	access_log  /var/log/nginx/vanki_access.log;
-	error_log   /var/log/nginx/vanki_error.log;
+	access_log  /var/log/nginx/web_access.log;
+	error_log   /var/log/nginx/web_error.log;
 
 	index index.php index.html index.htm;
 
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to index.php
+		try_files $uri $uri/ /index.php;
+	}
+
 	location ~ .php$ {
 		fastcgi_pass   127.0.0.1:9000;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_index  index.php;
-		fastcgi_param  SCRIPT_FILENAME /home/vanki/public$fastcgi_script_name;
+		fastcgi_param  SCRIPT_FILENAME /home/web/public$fastcgi_script_name;
 		include fastcgi_params;
 	}
 
