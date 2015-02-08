@@ -6,7 +6,8 @@
 <p>Set up the root password (default: password)</p>
 <p><code>mysql -u root -p</code></p>
 <p><code>mysql> use mysql;</code></p>
-<p><code>mmysql> UPDATE mysql.user SET Password=PASSWORD('new-password') WHERE User='root';</code></p>
-<p><code>mFLUSH PRIVILEGES;<br>quit;</code></p>
+<p><code>mysql> UPDATE mysql.user SET Password=PASSWORD('new-password') WHERE User='root';</code></p>
+<p><code>mysql> GRANT ALL PRIVILEGES ON . TO 'root'@'%' WITH GRANT OPTION;</code></p>
+<p><code>mysql> FLUSH PRIVILEGES;<br>quit;</code></p>
 <h3>Gitlab</h3>
 <p>Username: root<br>Password: 5iveL!fe</p>
