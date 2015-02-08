@@ -8,7 +8,6 @@
 <p><code>mysql> use mysql;</code></p>
 <p><code>mmysql> UPDATE mysql.user SET Password=PASSWORD('new-password') WHERE User='root';</code></p>
 <p><code>mFLUSH PRIVILEGES;<br>quit;</code></p>
-<h3>More info:</h3>
-<p>Comming soon!</p>
-<p></p>
+<h3>Gitlab</h3>
+<p>Username: root<br>Password: 5iveL!fe</p>
 <p><b>Everything done!</b></p>
