@@ -26,4 +26,7 @@ sh mysql.sh > /dev/null
 echo "INSTALL GITLAB..."
 sh gitlab.sh > /dev/null
 
+echo "INSTALL OCTOBER..."
+sh october.sh > /dev/null
+
 echo "DONE!"
