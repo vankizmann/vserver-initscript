@@ -4,6 +4,7 @@
 <p><code>#SendEnv LANG LC_*</code></p>
 <h3>FTP</h3>
 <p>Run the init.sh and these commands:</p>
+<p><code>sudo usermod -aG www-data web</code></p>
 <p><code>passwd web</code></p>
 <h3>MySQL</h3>
 <p>Set up the root password (default: password)</p>

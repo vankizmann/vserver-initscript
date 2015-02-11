@@ -1,0 +1,7 @@
+deb http://ftp.us.debian.org/debian wheezy main contrib non-free
+deb http://security.debian.org/ wheezy/updates main
+
+deb http://packages.dotdeb.org wheezy all
+deb-src http://packages.dotdeb.org wheezy all
+
+deb https://oss-binaries.phusionpassenger.com/apt/passenger wheezy main
