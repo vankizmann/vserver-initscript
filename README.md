@@ -1,7 +1,5 @@
 <h1>VSERVER Initscript</h1>
-<p>First set locale</p>
-<p><code>nano /etc/ssh/ssh_config</code></p>
-<p><code>#SendEnv LANG LC_*</code></p>
+<p>Restart server</p>
 <h3>FTP</h3>
 <p>Run the init.sh and these commands:</p>
 <p><code>sudo usermod -aG www-data web</code></p>
@@ -20,5 +18,7 @@
 <p><code>sudo gitlab-ctl reconfigure</code></p>
 <p><code>sudo usermod -aG gitlab-www www-data</code></p>
 <p>Username: root<br>Password: 5iveL!fe</p>
+<h3>Teamspeak</h3>
+<p><code>teamspeak start</code></p>
 <h3>Done!</h3>
-<p><b>Restart server</b></p>
+<p>Restart server once more</p>

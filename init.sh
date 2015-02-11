@@ -39,4 +39,12 @@ sh gitlab.sh > /dev/null
 echo "INSTALL OCTOBER..."
 sh october.sh > /dev/null
 
+echo "INSTALL TEAMSPEAK..."
+sh teamspeak.sh > /dev/null
+
+echo "LINK .PROFILE..."
+rm /root/.profile
+ln system/.profile /root/.profile
+source /root/.profile
+
 echo "DONE!"

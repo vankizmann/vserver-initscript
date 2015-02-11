@@ -1,0 +1,24 @@
+#!/bin/sh
+
+USER="teamspeak"
+DIR="/home/teamspeak3/teamspeak3-server_linux-amd64"
+
+case "$1" in
+start)
+su $USER -c "${DIR}/ts3server_startscript.sh start"
+;;
+stop)
+su $USER -c "${DIR}/ts3server_startscript.sh stop"
+;;
+restart)
+su $USER -c "${DIR}/ts3server_startscript.sh restart"
+;;
+status)
+su $USER -c "${DIR}/ts3server_startscript.sh status"
+;;
+*)
+echo "Usage: {start|stop|restart|status}" >&2
+exit 1
+;;
+esac
+exit 0
