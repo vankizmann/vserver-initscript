@@ -7,7 +7,7 @@ mkdir /home/web/public
 chown -R web /home/web
 
 # Install vsftpd
-apt-get install wheezy-updates debian-cyconet-archive-keyring vsftpd -t -q -y
+apt-get install -t wheezy-updates debian-cyconet-archive-keyring vsftpd -q -y --force-yes
 
 # Stop service
 service vsftpd stop

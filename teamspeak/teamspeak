@@ -1,7 +1,7 @@
 #!/bin/sh
 
 USER="teamspeak"
-DIR="/home/teamspeak3/teamspeak3-server_linux-amd64"
+DIR="/home/teamspeak/teamspeak3-server_linux-amd64"
 
 case "$1" in
 start)
