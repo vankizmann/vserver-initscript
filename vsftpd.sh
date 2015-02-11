@@ -4,9 +4,10 @@
 useradd web
 mkdir /home/web
 mkdir /home/web/public
+chown -R web /home/web/public
 
 # Install vsftpd
-apt-get install vsftpd -q -y
+apt-get install wheezy-updates debian-cyconet-archive-keyring vsftpd -t -q -y
 
 # Stop service
 service vsftpd stop

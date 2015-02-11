@@ -1,5 +1,7 @@
-deb http://ftp.us.debian.org/debian wheezy main contrib non-free
+deb http://ftp.us.debian.org/debian wheezy main
 deb http://security.debian.org/ wheezy/updates main
+
+deb http://ftp.cyconet.org/debian wheezy-updates main non-free contrib
 
 deb http://packages.dotdeb.org wheezy all
 deb-src http://packages.dotdeb.org wheezy all
