@@ -1,9 +1,8 @@
 <h1>VSERVER Initscript</h1>
-<p>Restart server</p>
 <h3>FTP</h3>
 <p>Run the init.sh and these commands:</p>
-<p><code>sudo usermod -aG www-data web</code></p>
 <p><code>passwd web</code></p>
+<p><code>sudo usermod -aG www-data web</code></p>
 <h3>MySQL</h3>
 <p>Set up the root password (default: password)</p>
 <p><code>service mysql start</code></p>
@@ -19,6 +18,8 @@
 <p><code>sudo usermod -aG gitlab-www www-data</code></p>
 <p>Username: root<br>Password: 5iveL!fe</p>
 <h3>Teamspeak</h3>
+<p>Restart server</p>
+<p><code>passwd teamspeak</code></p>
 <p><code>teamspeak start</code></p>
 <h3>Done!</h3>
-<p>Restart server once more</p>
+
